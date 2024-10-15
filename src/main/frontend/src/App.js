@@ -1,20 +1,21 @@
-import {useEffect, useState} from "react";
+import NavBar from "./components/NavBar";
+import {BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import SignUp from "./components/SignUp";
 
 function App() {
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    fetch('http://localhost:8080/api/message')
-        .then(response => response.json())
-        .then(data => setMessage(data.message))
-        .catch(error => console.error('Error fetching data: ', error));
-  }, []);
 
   return (
-      <div className="App">
-        <h1>React, Spring Boot 통신 확인</h1>
-        <p>{message ? message : '로딩 중'}</p>
-      </div>
+      <Router>
+          <div className="App">
+              <NavBar/>
+              <main>
+                  <Routes>
+                      <Route path="/" element={<h1>홈 페이지 내용</h1>}/>
+                      <Route path="/signup" element={<SignUp />}/>
+                  </Routes>
+              </main>
+          </div>
+      </Router>
   );
 
 }
