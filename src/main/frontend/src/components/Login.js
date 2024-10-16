@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React, {useState} from "react";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from "react-router-dom";
 import './LoginAndSignUp.css';
 
-function SignUp() {
+function Login({onLogin}) {
     const [formData, setFormData] = useState({
         username: '',
-        password: '',
-        phoneNumber: '',
-        email: ''
+        password: ''
     });
 
     const navigate = useNavigate();
@@ -24,11 +22,18 @@ function SignUp() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8080/api/register', formData);
-            console.log('User registered successfully: ', response.data);
-            navigate('/');
+            const response = await axios.post('http://localhost:8080/api/login', formData);
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                console.log('로그인 성공');
+                onLogin(formData.username);
+                navigate('/');
+            } else {
+                console.log('로그인 실패 : ', response.data);
+                alert(response.data);
+            }
         } catch (error) {
-            console.error('Error registering user: ', error);
+            console.error('로그인 에러 : ', error);
         }
     };
 
@@ -36,16 +41,20 @@ function SignUp() {
         navigate('/');
     };
 
+    const handleSignUp = () => {
+        navigate('/signup');
+    };
+
     return (
         <div>
-            <h2>회원가입</h2>
+            <h2>로그인</h2>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
                     name="username"
                     placeholder="아이디"
                     value={formData.username}
-                    onChange={handleChange}
+                    onChange={(handleChange)}
                 />
                 <input
                     type="password"
@@ -54,26 +63,12 @@ function SignUp() {
                     value={formData.password}
                     onChange={handleChange}
                 />
-                <input
-                    type="text"
-                    name="phoneNumber"
-                    placeholder="전화번호"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                />
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="이메일"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-                <button type="submit">회원가입</button>
+                <button type="submit">로그인</button>
                 <button type="button" onClick={handleCancel}>취소</button>
+                <button type="button" onClick={handleSignUp}>회원가입</button>
             </form>
         </div>
-
     );
 }
 
-export default SignUp;
+export default Login;
