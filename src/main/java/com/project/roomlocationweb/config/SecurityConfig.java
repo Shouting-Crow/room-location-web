@@ -33,8 +33,7 @@ public class SecurityConfig {
                         .disable()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/api/logout")
-                        .logoutSuccessUrl("/")
+                        .disable()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 

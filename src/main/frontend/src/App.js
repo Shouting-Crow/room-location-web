@@ -2,12 +2,34 @@ import NavBar from "./components/NavBar";
 import {BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 function App() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('');
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if(token) {
+            axios.post('http://localhost:8080/api/check-token', null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then(response => {
+                    if (response.data.username) {
+                        setIsLoggedIn(true);
+                        setUsername(response.data.username);
+                    }
+            })
+            .catch(error => {
+                console.error('세션 검증 실패: ', error);
+                localStorage.removeItem('token');
+            });
+        }
+    }, []);
 
     const handleLogin = (username) => {
         setIsLoggedIn(true);
