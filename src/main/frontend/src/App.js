@@ -4,11 +4,13 @@ import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import RoomStructure from "./components/RoomStructure";
 
 function App() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('');
+    const [roomShape, setRoomShape] = useState(null);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -42,6 +44,10 @@ function App() {
         localStorage.removeItem('token');
     }
 
+    const handleNextStep = (shape) => {
+        setRoomShape(shape);
+    };
+
   return (
       <Router>
           <div className="App">
@@ -51,6 +57,7 @@ function App() {
                       <Route path="/" element={<h1>홈 페이지 내용</h1>}/>
                       <Route path="/signup" element={<SignUp />}/>
                       <Route path="/login" element={<Login onLogin={handleLogin}/>}/>
+                      <Route path="/room-create" element={<RoomStructure onNext={handleNextStep} />}/>
                   </Routes>
               </main>
           </div>

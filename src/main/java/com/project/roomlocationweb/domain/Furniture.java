@@ -19,9 +19,19 @@ public class Furniture {
     private Category category;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "x", column = @Column(name = "location3d_x")),
+            @AttributeOverride(name = "y", column = @Column(name = "location3d_y")),
+            @AttributeOverride(name = "z", column = @Column(name = "location3d_z"))
+    })
     private Size3D location;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "x", column = @Column(name = "size3d_x")),
+            @AttributeOverride(name = "y", column = @Column(name = "size3d_y")),
+            @AttributeOverride(name = "z", column = @Column(name = "size3d_z"))
+    })
     private Size3D size;
 
     @ManyToOne
