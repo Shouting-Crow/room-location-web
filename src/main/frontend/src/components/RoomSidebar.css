@@ -1,0 +1,61 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-left: 1px solid #ddd;
+}
+
+.shape-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.shape-thumbnail {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+}
+
+.shape-thumbnail:hover {
+    border: 2px solid #007bff;
+}
+
+.size-controls {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.size-controls label {
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.size-controls input[type="range"] {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.next-step {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%; /* 버튼을 적절한 너비로 맞춤 */
+}
+
+.next-step:hover {
+    background-color: #0056b3;
+}
